@@ -1,6 +1,8 @@
 #!/bin/bash
 set -ex
 
+RAM=${1:-8G}
+
 pushd sysa
 
 # SYSTEM A
@@ -62,7 +64,7 @@ find . | cpio -H newc -o | gzip > initramfs.igz
 
 # Run
 qemu-system-x86_64 -enable-kvm \
-    -m 16G \
+    -m ${RAM} \
     -nographic \
     -no-reboot \
     -kernel ../../kernel -initrd initramfs.igz -append console=ttyS0,kernel.panic=2
