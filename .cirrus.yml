@@ -1,5 +1,8 @@
 container:
   image: potyarkin/molecule:host-kvm 
+  kvm: true
+  cpu: 1
+  memory: 4G
 
 lint_task:
   install_script:
@@ -21,5 +24,10 @@ run_task:
     - sleep 2 && /usr/sbin/libvirtd
   iptables_legacy_script:
     - update-alternatives --set iptables /usr/sbin/iptables-legacy
+  deps_script:
+    - apt-get -y update
+    - apt-get -y dist-upgrade
+    - apt-get -y install sudo 
+    - apt-get -y clean
   run_script:
-    - ./rootfs.sh
+    - ./rootfs.sh 3500M
