@@ -64,7 +64,7 @@ find . | cpio -H newc -o | gzip > initramfs.igz
 
 # Run
 qemu-system-x86_64 -enable-kvm \
-    -m ${RAM} \
+    -m "${RAM}" \
     -nographic \
     -no-reboot \
     -kernel ../../kernel -initrd initramfs.igz -append console=ttyS0,kernel.panic=2

@@ -27,9 +27,11 @@ run_task:
   deps_script:
     - apt-get -y update
     - apt-get -y dist-upgrade
-    - apt-get -y install sudo git 
+    - apt-get -y install sudo git cpio linux-image-4.19.0-13-amd64
     - apt-get -y clean
   submodule_script:
     - git submodule update --init --recursive
+  kernel_script:
+    - cp /boot/vmlinuz-4.19.0-13-amd64 ./kernel
   run_script:
     - ./rootfs.sh 3500M
