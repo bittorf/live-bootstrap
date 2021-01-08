@@ -1,7 +1,7 @@
 container:
   image: potyarkin/molecule:host-kvm 
 
-sh_lint:
+lint_task:
   install_script:
     - apt-get -y update
     - apt-get -y dist-upgrade
@@ -10,7 +10,7 @@ sh_lint:
   check_script:
     - shellcheck rootfs.sh
 
-run:
+run_task:
   # Required background services
   dbus_background_script:
     - mkdir -p /var/run/dbus
