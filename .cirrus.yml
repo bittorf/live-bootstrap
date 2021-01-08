@@ -1,0 +1,26 @@
+container:
+  image: potyarkin/molecule:host-kvm 
+
+task:
+  sh_lint:
+    install_script:
+      - apt-get -y update
+      - apt-get -y dist-upgrade
+      - apt-get -y install shellcheck
+      - apt-get -y clean
+    check_script:
+      - shellcheck rootfs.sh
+
+  run:
+    # Required background services
+    dbus_background_script:
+	  - mkdir -p /var/run/dbus
+	  - /usr/bin/dbus-daemon --system --nofork --nopidfile
+	virtlogd_background_script:
+	  - /usr/sbin/virtlogd
+	libvirtd_background_script:
+	  - sleep 2 && /usr/sbin/libvirtd
+    iptables_legacy_script:
+      - update-alternatives --set iptables /usr/sbin/iptables-legacy
+    run_script:
+      - ./rootfs.sh
