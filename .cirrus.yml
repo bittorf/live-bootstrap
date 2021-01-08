@@ -27,7 +27,9 @@ run_task:
   deps_script:
     - apt-get -y update
     - apt-get -y dist-upgrade
-    - apt-get -y install sudo 
+    - apt-get -y install sudo git 
     - apt-get -y clean
+  submodule_script:
+    - git submodule update --init --recursive
   run_script:
     - ./rootfs.sh 3500M
