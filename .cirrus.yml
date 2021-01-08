@@ -14,8 +14,8 @@ task:
   run:
     # Required background services
     dbus_background_script:
-	  - mkdir -p /var/run/dbus
-	  - /usr/bin/dbus-daemon --system --nofork --nopidfile
+      - mkdir -p /var/run/dbus
+      - /usr/bin/dbus-daemon --system --nofork --nopidfile
 	virtlogd_background_script:
 	  - /usr/sbin/virtlogd
 	libvirtd_background_script:
