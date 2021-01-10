@@ -33,10 +33,9 @@ run_task:
     - git submodule update --init --recursive
   kernel_script:
     - cp /boot/vmlinuz-4.19.0-13-amd64 ./kernel
-  kill_background_script:
-    - touch /tmp/qemuoutput.txt
-    # While qemu is incomplete
-    - while ! grep -q 'Attempted to kill init!' /tmp/qemuoutput.txt; do sleep 1; done && killall qemu-system-x86_64
   run_script:
     - ./rootfs.sh true 0 
+    - touch /tmp/qemuoutput.txt
+    # While qemu is incomplete
+    - (while ! grep -q 'Attempted to kill init!' /tmp/qemuoutput.txt; do sleep 1; done && killall qemu-system-x86_64) &
     - qemu-system-x86_64 -enable-kvm -m 3500M -nographic -no-reboot -kernel kernel -initrd sysa/tmp/initramfs.igz -append console=ttyS0 | tee /tmp/qemuoutput.txt || grep -q 'Completed.' /tmp/qemuoutput.txt
