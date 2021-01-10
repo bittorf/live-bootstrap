@@ -33,7 +33,7 @@ run_task:
     - git submodule update --init --recursive
   kernel_script:
     - cp /boot/vmlinuz-4.19.0-13-amd64 ./kernel
-  kill_background_task:
+  kill_background_script:
     - touch /tmp/qemuoutput.txt
     # While qemu is incomplete
     - while ! grep -q 'Attempted to kill init!' /tmp/qemuoutput.txt; sleep 1; done && killall qemu-system-x86_64
