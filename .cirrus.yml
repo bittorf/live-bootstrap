@@ -39,4 +39,4 @@ run_task:
     - while ! grep -q 'Attempted to kill init!' /tmp/qemuoutput.txt; sleep 1; done && killall qemu-system-x86_64
   run_script:
     - ./rootfs.sh true 
-    - qemu-system-x86_64 -enable-kvm -m "${RAM}" -nographic -no-reboot -kernel ../../kernel -initrd initramfs.igz -append console=ttyS0 | tee /tmp/qemuoutput.txt || grep -q 'Completed.' /tmp/qemuoutput.txt
+    - qemu-system-x86_64 -enable-kvm -m 3500M -nographic -no-reboot -kernel ../../kernel -initrd initramfs.igz -append console=ttyS0 | tee /tmp/qemuoutput.txt || grep -q 'Completed.' /tmp/qemuoutput.txt
