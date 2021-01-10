@@ -1,7 +1,8 @@
 #!/bin/bash
 set -ex
 
-RAM=${1:-8G}
+QEMU_CMD=${1:-qemu-system-x86_64}
+RAM=${2:-8G}
 
 pushd sysa
 
@@ -63,11 +64,12 @@ cd tmp
 find . | cpio -H newc -o | gzip > initramfs.igz
 
 # Run
-qemu-system-x86_64 -enable-kvm \
+"${QEMU_CMD}" -enable-kvm \
     -m "${RAM}" \
     -nographic \
     -no-reboot \
-    -kernel ../../kernel -initrd initramfs.igz -append console=ttyS0,kernel.panic=2
+    -kernel ../../kernel -initrd initramfs.igz \
+    -append "console=ttyS0" | tee -a asdf.txt
 
 cd ../..
 
