@@ -2,7 +2,8 @@
 set -ex
 
 QEMU_CMD=${1:-qemu-system-x86_64}
-RAM=${2:-8G}
+DOUMOUNT=${2:-1}
+RAM=${3:-8G}
 
 pushd sysa
 
@@ -74,4 +75,6 @@ find . | cpio -H newc -o | gzip > initramfs.igz
 cd ../..
 
 # Cleanup
-sudo umount sysa/tmp
+if [ ${DOUMOUNT} = '1' ]; then
+    sudo umount sysa/tmp
+fi
