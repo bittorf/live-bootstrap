@@ -138,12 +138,13 @@ case "${QEMU_CMD}" in
 		sudo PATH="/after/bin:${PATH}" chroot . /init | tee "$LOGFILE"
 	;;
 	minikernel)
-		git clone --depth 1 --branch v0.4 https://github.com/bittorf/kritis-linux.git
+		git clone --depth 1 https://github.com/bittorf/kritis-linux.git
 
 		kritis-linux/ci_helper.sh \
-			--arch x86_64 \
-			--ramsize 4G \
-			--kernel 5.10.8 \
+			--arch uml \
+			--features 32bit \
+			--ramsize 2G \
+			--kernel 4.14.x \
 			--initrd initramfs.igz \
 			--log "$LOGFILE"
 	;;
